@@ -32,7 +32,7 @@ jupyter notebook
 
 Inputs:
 
-```bash
+```text
 Input: Give the top 5 food items from South India
 
 Desired Format:
@@ -40,3 +40,14 @@ JSON include name, description fields only
 
 Answer:
 ```
+
+```text
+Input: Give the top 5 Populated states in India
+
+Desired Format:
+JSON include name, count, description fields only
+
+Answer:
+```
+
+```text
