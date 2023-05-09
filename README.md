@@ -29,3 +29,14 @@ jupyter-lab
 pip install notebook
 jupyter notebook
 ```
+
+Inputs:
+
+```bash
+Input: Give the top 5 food items from South India
+
+Desired Format:
+JSON include name, description fields only
+
+Answer:
+```
