@@ -1,33 +1,40 @@
 import pyodbc
 
-# Function to call the stored procedure and insert data into the database
-def insert_data_with_stored_proc(connection_string, country_id, country_name, capital_state, country_bird, country_population):
+from dotenv import dotenv_values
+config_details = dotenv_values(".env")
+
+def insert_country_info(connection_string, country_name, capital_state, national_bird, country_population):
     try:
-        # Establish a connection to the database
-        with pyodbc.connect(connection_string) as conn:
-            # Create a cursor to execute SQL queries
-            cursor = conn.cursor()
+        # Connect to the SQL Server database
+        conn = pyodbc.connect(connection_string)
+        cursor = conn.cursor()
 
-            # Call the stored procedure with parameters
-            cursor.execute("{CALL usp_insert_country_info(?, ?, ?, ?, ?)}",
-                           (country_id, country_name, capital_state, country_bird, country_population))
+        # Prepare the SQL statement to execute the stored procedure
+        sql = "{CALL usp_insert_country_info (?, ?, ?, ?, ?)}"
 
-            # Commit the changes to the database
-            conn.commit()
+        # Prepare the parameters for the stored procedure
+        params = (country_name, capital_state, national_bird, country_population, None)
 
-            print("Data inserted successfully.")
-    except pyodbc.Error as e:
-        print(f"Error inserting data: {e}")
+        # Execute the stored procedure to insert data into the table
+        cursor.execute(sql, params)
+        conn.commit()
 
-# Sample data
-country_id = 1
-country_name = "United States"
-capital_state = "Washington, D.C."
-country_bird = "Bald Eagle"
-country_population = 328200000
+        # Retrieve the output parameter value (CountryId)
+        country_id = params[4]
+        print(f"Data inserted successfully. CountryId: {country_id}")
+    except pyodbc.Error as ex:
+        print("Error:", ex)
+    finally:
+        if conn:
+            conn.close()
 
-# Connection string for your Azure SQL Server database
-connection_string = "Driver={SQL Server};Server=myserver.database.windows.net;Database=mydb;UID=myuser;PWD=mypassword"
+# Example usage:
+if __name__ == "__main__":
+    connection_string = config_details['SQLSERVERCONNECTIONSTRING']
 
-# Call the function to insert data using the stored procedure
-insert_data_with_stored_proc(connection_string, country_id, country_name, capital_state, country_bird, country_population)
+    country_name = "Sample Country"
+    capital_state = "Sample Capital"
+    national_bird = "Sample Bird"
+    country_population = 1000000
+
+    insert_country_info(connection_string, country_name, capital_state, national_bird, country_population)
