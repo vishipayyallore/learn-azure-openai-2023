@@ -1,4 +1,4 @@
-CREATE PROCEDURE InsertCountryInfo
+CREATE PROCEDURE [dbo].[usp_insert_country_info]
     @CountryName NVARCHAR(100),
     @CapitalState NVARCHAR(100),
     @CountryBird NVARCHAR(100),
