@@ -15,5 +15,7 @@ BEGIN
         (@CountryName, @CapitalState, @NationalBird, @CountryPopulation);
 
     SET @CountryId = SCOPE_IDENTITY();
+
+    SELECT @CountryId AS CountryId;
     
 END;

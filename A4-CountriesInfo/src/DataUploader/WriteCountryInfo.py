@@ -25,6 +25,10 @@ def insert_country_info(connection_string, country_info):
 
         # Execute the stored procedure to insert data into the table
         cursor.execute(sql, params)
+        
+        # Fetch the output parameter value (CountryId)
+        # country_info.country_id = params[4]
+        country_info.country_id = cursor.fetchval()
 
         # Commit the transaction
         conn.commit()
