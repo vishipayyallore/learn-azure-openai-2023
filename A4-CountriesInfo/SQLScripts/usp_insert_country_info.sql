@@ -14,6 +14,6 @@ BEGIN
     VALUES 
         (@CountryName, @CapitalState, @CountryBird, @CountryPopulation);
 
-    SET @Id = SCOPE_IDENTITY();
+    SET @CountryId = SCOPE_IDENTITY();
     
 END;
