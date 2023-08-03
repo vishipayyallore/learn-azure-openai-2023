@@ -4,6 +4,7 @@ import pyodbc
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import dotenv_values
 from urllib.parse import quote_plus  # Import the quote_plus function
+from GetCountryInfoFromAzureOpenAI import GetCountryInfoFromAzureOpenAI
 
 app = Flask(__name__)
 
@@ -18,6 +19,9 @@ print(connection_string)
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mssql+pyodbc:///?odbc_connect={quote_plus(connection_string)}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = config_details['SQLALCHEMY_TRACK_MODIFICATIONS']
 db = SQLAlchemy(app)
+
+# Create an instance of the GetCountryInfoFromAzureOpenAI class
+openai_helper = GetCountryInfoFromAzureOpenAI()
 
 # Configure app-wide logging settings
 app.logger.setLevel(logging.DEBUG)  # Set the log level to DEBUG
@@ -45,7 +49,7 @@ class CountryInfo(db.Model):
 
 
 # Define the route to insert country information
-@app.route('/api/country', methods=['POST'])
+@app.route('/api/countryinfo', methods=['POST'])
 def insert_country_info():
     try:
         # Parse the JSON data from the request
@@ -53,6 +57,10 @@ def insert_country_info():
 
         # Log the data received in the request
         app.logger.debug("Received data: %s", country_data)
+
+        # Get the country information from Azure OpenAI
+        country_name = country_data.get('country_name')
+        country_data = openai_helper.get_country_info(country_name)
 
         # Create a CountryInfo object from the JSON data
         country_info = CountryInfo(
@@ -66,8 +74,16 @@ def insert_country_info():
         db.session.add(country_info)
         db.session.commit()
 
-        # Return the inserted CountryId as a response
-        return jsonify({'CountryId': country_info.CountryId}), 201
+        # Return the inserted CountryInfo as a response
+        response_data = {
+            'CountryId': country_info.CountryId,
+            'CountryName': country_info.CountryName,
+            'CapitalState': country_info.CapitalState,
+            'NationalBird': country_info.NationalBird,
+            'CountryPopulation': country_info.CountryPopulation
+        }
+
+        return jsonify(response_data), 201
 
     except Exception as e:
         app.logger.exception("An error occurred while processing the request:")
