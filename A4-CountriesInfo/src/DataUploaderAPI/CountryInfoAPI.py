@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import dotenv_values
 from urllib.parse import quote_plus  # Import the quote_plus function
 from GetCountryInfoFromAzureOpenAI import GetCountryInfoFromAzureOpenAI
+from CountryInfoDto import CountryInfoDto
 
 app = Flask(__name__)
 
@@ -13,7 +14,7 @@ config_details = dotenv_values(".env")
 
 connection_string = config_details["SQLSERVERCONNECTIONSTRING"]
 # Print the connection string
-print(connection_string)
+# print(connection_string)
 
 # Configure the SQLAlchemy database
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mssql+pyodbc:///?odbc_connect={quote_plus(connection_string)}"
@@ -38,14 +39,13 @@ file_handler.setFormatter(formatter)  # Set the formatter for the file handler
 # Add the file handler to the Flask app's logger
 app.logger.addHandler(file_handler)
 
-
-class CountryInfo(db.Model):
-    __tablename__ = 'CountryInfo'
-    CountryId = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    CountryName = db.Column(db.String(100))
-    CapitalState = db.Column(db.String(100))
-    NationalBird = db.Column(db.String(100))
-    CountryPopulation = db.Column(db.BigInteger)
+# class CountryInfo(db.Model):
+#     __tablename__ = 'CountryInfo'
+#     CountryId = db.Column(db.Integer, primary_key=True, autoincrement=True)
+#     CountryName = db.Column(db.String(100))
+#     CapitalState = db.Column(db.String(100))
+#     NationalBird = db.Column(db.String(100))
+#     CountryPopulation = db.Column(db.BigInteger)
 
 
 # Define the route to insert country information
@@ -63,7 +63,7 @@ def insert_country_info():
         country_data = openai_helper.get_country_info(country_name)
 
         # Create a CountryInfo object from the JSON data
-        country_info = CountryInfo(
+        country_info = CountryInfoDto(
             CountryName=country_data['country_name'],
             CapitalState=country_data['capital_state'],
             NationalBird=country_data['national_bird'],
