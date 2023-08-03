@@ -15,8 +15,7 @@ PS C:\LordKrishna\GitHub\learn-azure-openai-2023> .\pvenv\Scripts\activate
 
 pip list
 pip install --upgrade pip
-pip install pyodbc
-pip install python-dotenv
+pip install flask sqlalchemy pyodbc python-dotenv
 pip freeze > requirements.txt
 pip install -r requirements.txt
 
