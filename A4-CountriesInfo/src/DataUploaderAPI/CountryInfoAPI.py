@@ -1,8 +1,8 @@
 import logging
 from flask import Flask, request, jsonify
+import pyodbc
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import dotenv_values
-import pyodbc
 from urllib.parse import quote_plus  # Import the quote_plus function
 
 app = Flask(__name__)
@@ -10,38 +10,12 @@ app = Flask(__name__)
 # Load configuration from .env file
 config_details = dotenv_values(".env")
 
-# Encode the password using quote_plus
-encoded_password = quote_plus(config_details['PASSWORD'])
-
-# # Construct the SQLAlchemy database URI with the encoded password
-# db_uri = f"mssql+pyodbc://{config_details['USERNAME']}:{encoded_password}" \
-#          f"@{config_details['SERVER']},{config_details['PORT']};" \
-#          f"DATABASE={config_details['DATABASE']};" \
-#          f"DRIVER={config_details['DRIVER']}"
-
-# # Construct the SQLAlchemy database URI without the DSN
-# db_uri = f"mssql+pyodbc://{config_details['USERNAME']}:{encoded_password}" \
-#          f"@{config_details['SERVER']},{config_details['PORT']};" \
-#          f"DATABASE={config_details['DATABASE']};" \
-#          f"DRIVER={{{config_details['DRIVER']}}}"
-# print(db_uri)
-
-# Construct the connection string
-# connection_string = f"Driver={{{config_details['DRIVER']}}};Server=tcp:{config_details['SERVER']},{config_details['PORT']};" \
-#                     f"Database={config_details['DATABASE']};Uid={config_details['USERNAME']};" \
-#                     f"Pwd={config_details['PASSWORD']};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
-
-
 connection_string = config_details["SQLSERVERCONNECTIONSTRING"]
 # Print the connection string
 print(connection_string)
 
 # Configure the SQLAlchemy database
-# app.config['SQLALCHEMY_DATABASE_URI'] = f"mssql+pyodbc:///?odbc_connect={pyodbc.connect(connection_string)}"
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mssql+pyodbc:///?odbc_connect={quote_plus(connection_string)}"
-
-# Configure the SQLAlchemy database
-# app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = config_details['SQLALCHEMY_TRACK_MODIFICATIONS']
 db = SQLAlchemy(app)
 
