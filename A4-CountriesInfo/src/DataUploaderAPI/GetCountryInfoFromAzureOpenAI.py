@@ -4,8 +4,9 @@ from dotenv import dotenv_values
 
 
 class GetCountryInfoFromAzureOpenAI:
+    config_details = dotenv_values(".env")
+
     def __init__(self):
-        self.config_details = dotenv_values(".env")
         openai.api_type = "azure"
         openai.api_base = self.config_details['OPENAI_API_BASE']
         openai.api_version = self.config_details['OPENAI_API_VERSION']
