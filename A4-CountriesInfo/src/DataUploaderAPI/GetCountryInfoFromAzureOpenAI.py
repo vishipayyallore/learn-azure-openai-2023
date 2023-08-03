@@ -2,6 +2,7 @@ import json
 import openai
 from dotenv import dotenv_values
 
+
 class GetCountryInfoFromAzureOpenAI:
     def __init__(self):
         self.config_details = dotenv_values(".env")
@@ -12,7 +13,7 @@ class GetCountryInfoFromAzureOpenAI:
 
     def get_country_info(self, country_name):
 
-        input_prompt = f"Please give me the country_name, capital_state, national_bird, country_population for {country_name} in JSON format. country_population should be in BIGINT"
+        input_prompt = f"Please give me the country_name, capital_state, national_bird, country_population for {country_name} in flat JSON object. country_population should be in BIGINT without separators"
 
         print("Input prompt:", input_prompt)
 
