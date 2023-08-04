@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from openai_integration import GetCountryInfoFromAzureOpenAI
+from GetCountryInfoFromAzureOpenAI import GetCountryInfoFromAzureOpenAI
 from models import CountryInfoDto
 
 api_routes_bp = Blueprint('api_routes', __name__)
