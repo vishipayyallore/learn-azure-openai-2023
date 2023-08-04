@@ -1,6 +1,6 @@
 import json
 import openai
-from env_config import get_config_value
+from utils.env_config import get_config_value
 
 
 class GetCountryInfoFromAzureOpenAI:

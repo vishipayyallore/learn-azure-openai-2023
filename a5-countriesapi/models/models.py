@@ -1,4 +1,4 @@
-from db_config import db
+from utils.db_config import db
 
 
 class CountryInfoDto(db.Model):

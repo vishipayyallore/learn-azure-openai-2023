@@ -1,8 +1,8 @@
 from flask import Flask
 from dotenv import dotenv_values
-from api_routes import api_routes_bp
-from logging_config import configure_logging
-from db_config import db
+from api.api_routes import api_routes_bp
+from utils.logging_config import configure_logging
+from utils.db_config import db
 from urllib.parse import quote_plus  # Import the quote_plus function
 
 
