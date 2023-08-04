@@ -3,6 +3,7 @@ from dotenv import dotenv_values
 from api_routes import api_routes_bp
 from logging_config import configure_logging
 from db_config import db
+from urllib.parse import quote_plus  # Import the quote_plus function
 
 
 def create_app():
@@ -10,7 +11,12 @@ def create_app():
 
     # Load configuration from .env file
     config_details = dotenv_values(".env")
-    app.config['SQLALCHEMY_DATABASE_URI'] = config_details['SQLSERVERCONNECTIONSTRING']
+
+    connection_string = config_details["SQLSERVERCONNECTIONSTRING"]
+
+    # Configure the SQLAlchemy database
+    app.config[
+        'SQLALCHEMY_DATABASE_URI'] = f"mssql+pyodbc:///?odbc_connect={quote_plus(connection_string)}"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = config_details['SQLALCHEMY_TRACK_MODIFICATIONS']
 
     # Configure the app's logging settings
