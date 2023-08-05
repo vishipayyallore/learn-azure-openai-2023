@@ -2,7 +2,7 @@ from utils.db_config import db
 
 
 class CountryInfoDto(db.Model):
-    __tablename__ = 'CountryInfo'
+    __tablename__ = 'CountriesInfo'
     CountryId = db.Column(db.Integer, primary_key=True, autoincrement=True)
     CountryName = db.Column(db.String(100))
     CapitalState = db.Column(db.String(100))
