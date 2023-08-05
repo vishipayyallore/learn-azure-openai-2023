@@ -16,6 +16,7 @@ PS C:\LordKrishna\GitHub\learn-azure-openai-2023> .\pvenv\Scripts\activate
 
 pip list
 pip install --upgrade pip
+python.exe -m pip install --upgrade pip
 pip install Flask Flask-SQLAlchemy pyodbc sqlalchemy python-dotenv openai
 pip freeze > requirements.txt
 pip install -r requirements.txt

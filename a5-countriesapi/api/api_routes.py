@@ -10,7 +10,7 @@ openai_helper = GetCountryInfoFromAzureOpenAI()
 # Define the route to insert country information
 
 
-@api_routes_bp.route('/api/countryinfoV1', methods=['POST'])
+@api_routes_bp.route('/api/countryinfov1', methods=['POST'])
 def insert_country_info_v1():
     try:
         # Parse the JSON data from the request
