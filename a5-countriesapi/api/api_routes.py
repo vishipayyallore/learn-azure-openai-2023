@@ -10,9 +10,11 @@ api_routes_bp = Blueprint('api_routes', __name__)
 openai_helper = GetCountryInfoFromAzureOpenAI()
 
 # Define the route to insert country information
+@api_routes_bp.route('/')
+def home_api():
+    return 'Welcome to Python Flask Web API!'
 
-
-@api_routes_bp.route('/api/countryinfo', methods=['POST'])
+@api_routes_bp.route('/countryinfo', methods=['POST'])
 def insert_country_info():
     try:
         # Parse the JSON data from the request
