@@ -5,9 +5,9 @@ from utils.logging_config import configure_logging
 from utils.db_config import db
 from urllib.parse import quote_plus  # Import the quote_plus function
 
+app = Flask(__name__)
 
 def create_app():
-    app = Flask(__name__)
 
     # Load configuration from .env file
     config_details = dotenv_values(".env")
@@ -33,4 +33,4 @@ def create_app():
 
 if __name__ == "__main__":
     app = create_app()
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True)
