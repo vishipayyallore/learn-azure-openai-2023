@@ -30,6 +30,5 @@
         "venv.bak{,/**}",
         ".vscode{,/**}"
     ],
-    "appService.defaultWebAppToDeploy": "/subscriptions/adde4068-7659-4d48-884c-376263e2c56e/resourceGroups/rg-countries-dev-001/providers/Microsoft.Web/sites/app-countries-pyflask-api-001",
     "appService.deploySubpath": "."
 }
