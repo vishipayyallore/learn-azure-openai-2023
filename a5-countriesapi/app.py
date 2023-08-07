@@ -36,10 +36,9 @@ def create_app():
 
 
 # Create the app and run it during development
-# if __name__ == "__main__":
-#     app = create_app()
-#     app.run(host='0.0.0.0', port=5000, debug=True)  # During development
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000, debug=True)  # During development
 
-# For production deployment, comment out the above lines and use the one below
-app = create_app()
-app.run()  # In production
+# # For production deployment, comment out the above lines and use the one below
+# app = create_app()
+# app.run()  # In production
