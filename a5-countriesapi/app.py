@@ -7,9 +7,11 @@ from urllib.parse import quote_plus  # Import the quote_plus function
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def home():
     return 'Welcome to Python Flask API!'
+
 
 def create_app():
 
@@ -35,7 +37,7 @@ def create_app():
     return app
 
 
-# Create the app and run it during development
+# # # mCreate the app and run it during development
 # if __name__ == "__main__":
 #     app = create_app()
 #     app.run(host='0.0.0.0', port=5000, debug=True)  # During development

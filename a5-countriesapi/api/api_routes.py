@@ -10,9 +10,12 @@ api_routes_bp = Blueprint('api_routes', __name__)
 openai_helper = GetCountryInfoFromAzureOpenAI()
 
 # Define the route to insert country information
+
+
 @api_routes_bp.route('/')
 def home_api():
     return 'Welcome to Python Flask Web API!'
+
 
 @api_routes_bp.route('/countryinfo', methods=['POST'])
 def insert_country_info():
@@ -31,10 +34,6 @@ def insert_country_info():
             NationalBird=country_data['national_bird'],
             CountryPopulation=country_data['country_population']
         )
-
-        # Save the country_info object to the database
-        db.session.add(country_info)
-        db.session.flush()  # Flush the changes to get the CountryId
 
         # Execute the stored procedure to set the CountryId
         country_id_param = db.session.scalar(text('EXEC usp_insert_country_info :CountryName, :CapitalState, :NationalBird, :CountryPopulation, :CountryId'),
