@@ -35,10 +35,6 @@ def insert_country_info():
             CountryPopulation=country_data['country_population']
         )
 
-        # Save the country_info object to the database
-        # db.session.add(country_info)
-        # db.session.flush()  # Flush the changes to get the CountryId
-
         # Execute the stored procedure to set the CountryId
         country_id_param = db.session.scalar(text('EXEC usp_insert_country_info :CountryName, :CapitalState, :NationalBird, :CountryPopulation, :CountryId'),
                                              params={
